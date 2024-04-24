@@ -27,6 +27,21 @@ public class IntegrationTests {
     employeeController.delete(employeeResult.getId());
     Assertions.assertThat(employeeController.read()).isEmpty();
   }
+  
+  @Test
+  public void testCreateReadUpdateDelete() {
+    Employee employee = new Employee("Lokesh", "Gupta");
+
+    Employee employeeResult = employeeController.create(employee);
+
+    Iterable<Employee> employees = employeeController.read();
+    Assertions.assertThat(employees).first().hasFieldOrPropertyWithValue("firstName", "Lokesh");
+
+    Employee employee1 = employeeController.update(employee);
+    
+    employeeController.delete(employeeResult.getId());
+    Assertions.assertThat(employeeController.read()).isEmpty();
+  }
 
   @Test
   public void errorHandlingValidationExceptionThrown() {
